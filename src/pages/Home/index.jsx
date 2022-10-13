@@ -1,16 +1,15 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import Features from "components/Sections/Features";
+import Hero from "components/Sections/Hero";
+import React from "react";
 
 function Home() {
+  document.title = "Argent Bank - Home Page";
   return (
-    <div>
-      <h1>Home</h1>
-
-      <Link to='/login'>Login page</Link>
-      <br />
-      <Link to='/user/1'>Profile page</Link>
-    </div>
-  )
+    <main>
+      <Hero />
+      <Features />
+    </main>
+  );
 }
 
-export default Home
+export default Home;

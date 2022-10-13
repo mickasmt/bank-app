@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import "styles/components/footer.scss";
 
 function Footer() {
   return (
-    <div>Footer</div>
-  )
+    <footer class="footer">
+      <p class="footer-text">Copyright 2020 Argent Bank</p>
+    </footer>
+  );
 }
 
-export default Footer
+export default Footer;
