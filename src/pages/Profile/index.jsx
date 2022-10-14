@@ -1,11 +1,31 @@
-import React from 'react'
+import UserForm from "components/Forms/UserForm";
+import React, { useState } from "react";
 
 function Profile() {
+  const [showUserForm, setShowUserForm] = useState(false);
+
+  const toggleUserForm = () => {
+    setShowUserForm(!showUserForm)
+  }
+
   return (
     <main className="main bg-dark">
       <div className="header">
-        <h1>Welcome back<br />Tony Jarvis!</h1>
-        <button className="edit-button">Edit Name</button>
+        <h1>
+          Welcome back
+          <br />
+          Tony Jarvis!
+        </h1>
+        {showUserForm ? (
+          <UserForm toggleUserForm={toggleUserForm} />
+        ) : (
+          <button
+            className="edit-button"
+            onClick={() => toggleUserForm()}
+          >
+            Edit Name
+          </button>
+        )}
       </div>
       <h2 className="sr-only">Accounts</h2>
       <section className="account">
@@ -39,7 +59,7 @@ function Profile() {
         </div>
       </section>
     </main>
-  )
+  );
 }
 
-export default Profile
+export default Profile;

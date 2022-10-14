@@ -21,8 +21,8 @@ root.render(
       <Layout>
         <Routes>
           <Route path="/" exact element={<Home />} />
-          <Route path="/sign-in" element={<Login />} />
-          <Route path="/user/:id" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </Layout>
