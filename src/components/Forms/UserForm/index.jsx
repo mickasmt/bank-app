@@ -1,6 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "styles/components/forms/user-form.scss";
 
+/**
+ * User Form Component
+ * @param {Function} toggleUserForm Function for display/hide user form
+ * @returns {React.ReactElement}
+ */
 function UserForm({ toggleUserForm }) {
   return (
     <form className="user-form">
@@ -23,5 +29,10 @@ function UserForm({ toggleUserForm }) {
     </form>
   );
 }
+
+UserForm.propTypes = {
+  /** Function for display/hide user form */
+  toggleUserForm: PropTypes.func.isRequired,
+};
 
 export default UserForm;

@@ -1,63 +1,44 @@
-import UserForm from "components/Forms/UserForm";
-import React, { useState } from "react";
+import React from "react";
+import HeaderProfile from "components/Sections/HeaderProfile";
+import AccountCard from "components/Sections/AccountCard";
 
+const accountInfos = [
+  {
+    id: 1,
+    title: "Argent Bank Checking",
+    number: "8349",
+    amount: "2,082.79",
+  },
+  {
+    id: 2,
+    title: "Argent Bank Savings",
+    number: "6712",
+    amount: "10,928.42",
+  },
+  {
+    id: 3,
+    title: "Argent Bank Credit Card",
+    number: "8349",
+    amount: "184.30",
+  },
+];
+
+/**
+ * Profile Page
+ * @returns {React.ReactElement}
+ */
 function Profile() {
-  const [showUserForm, setShowUserForm] = useState(false);
-
-  const toggleUserForm = () => {
-    setShowUserForm(!showUserForm)
-  }
-
   return (
     <main className="main bg-dark">
-      <div className="header">
-        <h1>
-          Welcome back
-          <br />
-          Tony Jarvis!
-        </h1>
-        {showUserForm ? (
-          <UserForm toggleUserForm={toggleUserForm} />
-        ) : (
-          <button
-            className="edit-button"
-            onClick={() => toggleUserForm()}
-          >
-            Edit Name
-          </button>
-        )}
-      </div>
+      <HeaderProfile />
+
       <h2 className="sr-only">Accounts</h2>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-          <p className="account-amount">$2,082.79</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-          <p className="account-amount">$10,928.42</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-          <p className="account-amount">$184.30</p>
-          <p className="account-amount-description">Current Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
+
+      {accountInfos.map((info) => {
+        return (
+          <AccountCard data={info}  key={info.id} />
+        );
+      })}
     </main>
   );
 }

@@ -2,6 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "styles/components/forms/login-form.scss"
 
+
+/**
+ * Login Form Component
+ * @returns {React.ReactElement}
+ */
 function LoginForm() {
   return (
     <section className="sign-in-content">
