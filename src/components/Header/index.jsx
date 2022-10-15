@@ -3,6 +3,10 @@ import logo from "assets/img/argentBankLogo.png";
 import { Link } from "react-router-dom";
 import "styles/components/header.scss";
 
+/**
+ * Header Component
+ * @returns {React.ReactElement}
+ */
 function Header() {
   return (
     <nav className="main-nav">

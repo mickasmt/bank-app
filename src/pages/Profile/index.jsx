@@ -1,6 +1,6 @@
 import React from "react";
-import HeaderProfile from "components/Sections/HeaderProfile";
 import AccountCard from "components/Sections/AccountCard";
+import HeaderProfile from "components/Sections/HeaderProfile";
 
 const accountInfos = [
   {
