@@ -15,7 +15,7 @@ const getUser = () => {
 
 const updateUserProfile = ({ firstName, lastName }) => {
   return axios
-    .post(baseUrl + "/user/profile", {
+    .put(baseUrl + "/user/profile", {
       firstName,
       lastName,
     }, { headers: authHeader() })
@@ -25,9 +25,9 @@ const updateUserProfile = ({ firstName, lastName }) => {
     });
 };
 
-const authService = {
+const userService = {
   getUser,
   updateUserProfile,
 };
 
-export default authService;
+export default userService;

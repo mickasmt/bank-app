@@ -1,23 +1,57 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { setMessage } from "./messageSlice";
 
-export const authSlice = createSlice({
-  name: 'auth',
-  initialState: {
-    userToken: null
-  },
-  reducers: {
-    increment: state => {
-      state.value += 1
-    },
-    decrement: state => {
-      state.value -= 1
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload
+import AuthService from "redux/services/auth.service";
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+const initialState = user
+  ? { isLoggedIn: true, user }
+  : { isLoggedIn: false, user: null };
+
+
+export const login = createAsyncThunk(
+  "auth/login",
+  async ({ email, password }, thunkAPI) => {
+    try {
+      const data = await AuthService.login(email, password);
+      return { user: data };
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      thunkAPI.dispatch(setMessage(message));
+      return thunkAPI.rejectWithValue();
     }
   }
-})
+);
 
-export const { increment, decrement, incrementByAmount } = authSlice.actions
+export const logout = createAsyncThunk("auth/logout", async () => {
+  await AuthService.logout();
+});
 
-export default authSlice.reducer
+
+export const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {},
+  extraReducers: {
+    [login.fulfilled]: (state, action) => {
+      state.isLoggedIn = true;
+      state.user = action.payload.user;
+    },
+    [login.rejected]: (state, action) => {
+      state.isLoggedIn = false;
+      state.user = null;
+    },
+    [logout.fulfilled]: (state, action) => {
+      state.isLoggedIn = false;
+      state.user = null;
+    },
+  },
+});
+
+export default authSlice.reducer;
