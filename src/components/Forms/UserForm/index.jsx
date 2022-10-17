@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "redux/features/userSlice";
 
 import "styles/components/forms/user-form.scss";
-import { toast } from "react-toastify";
 
 /**
  * User Form Component

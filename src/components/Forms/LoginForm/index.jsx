@@ -1,11 +1,11 @@
+import * as Yup from "yup";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { login } from "redux/features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
-import * as Yup from "yup";
 
 import "styles/components/forms/login-form.scss";
-import { login } from "redux/features/authSlice";
-import { toast } from "react-toastify";
 
 /**
  * Login Form Component

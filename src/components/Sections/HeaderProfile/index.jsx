@@ -3,14 +3,13 @@ import UserForm from "components/Forms/UserForm";
 import { useSelector } from "react-redux";
 
 /**
- * Header Profile component. Contains UserForm
+ * Header Profile component.
  * @returns {React.ReactElement}
  */
 function HeaderProfile() {
   const [showUserForm, setShowUserForm] = useState(false);
 
   const { firstName, lastName } = useSelector((state) => state.user);
-
 
   const toggleUserForm = () => {
     setShowUserForm(!showUserForm);

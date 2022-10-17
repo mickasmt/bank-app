@@ -1,6 +1,10 @@
 import React from "react";
 import "styles/components/sections/hero.scss";
 
+/**
+ * Hero Homepage component.
+ * @returns {React.ReactElement}
+ */
 function Hero() {
   return (
     <div className="hero">
