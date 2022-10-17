@@ -6,11 +6,16 @@ const baseUrl =
 
 const getUser = () => {
   return axios
-    .post(baseUrl + "/user/profile", { headers: authHeader() })
+    .post(baseUrl + "/user/profile", null, { headers: authHeader() })
     .then((response) => {
-      console.log(response);
+      if (response.data.body) {
+        localStorage.setItem("bankUser", JSON.stringify({
+          firstname: response.data.body.firstName,
+          lastname: response.data.body.lastName,
+        }));
+      }
       return response.data;
-    });
+    }).catch(err => console.log(err));
 };
 
 const updateUserProfile = ({ firstName, lastName }) => {

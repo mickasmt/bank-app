@@ -3,17 +3,24 @@ import { setMessage } from "./messageSlice";
 
 import UserService from "redux/services/user.service";
 
-const initialState = {
-  firstName: null,
-  lastName: null
-};
+const user = JSON.parse(localStorage.getItem("bankUser"));
+
+const initialState = user
+  ? {
+      firstName: user.firstname,
+      lastName: user.lastname,
+    }
+  : {
+      firstName: null,
+      lastName: null,
+    };
 
 export const getProfile = createAsyncThunk(
-  "user/profile",
-  async ({ email, password }, thunkAPI) => {
+  "user/fetchUserProfile",
+  async (_, thunkAPI) => {
     try {
-      const data = await UserService.getUser();
-      return { user: data };
+      const response = await UserService.getUser();
+      return thunkAPI.fulfillWithValue(response.body);
     } catch (error) {
       const message =
         (error.response &&
@@ -28,10 +35,10 @@ export const getProfile = createAsyncThunk(
 );
 
 export const updateProfile = createAsyncThunk(
-  "user/profile",
-  async ({ email, password }, thunkAPI) => {
+  "user/updateUserProfile",
+  async ({ firstname, lastname }, thunkAPI) => {
     try {
-      const data = await UserService.getUser();
+      const data = await UserService.updateUserProfile();
       return { user: data };
     } catch (error) {
       const message =
@@ -46,23 +53,22 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
-
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {},
   extraReducers: {
     [getProfile.fulfilled]: (state, action) => {
-      state.isLoggedIn = true;
-      state.user = action.payload.user;
+      state.firstName = action.payload.firstName;
+      state.lastName = action.payload.lastName;
     },
     [getProfile.rejected]: (state, action) => {
-      state.isLoggedIn = false;
-      state.user = null;
+      state.firstName = null;
+      state.lastName = null;
     },
     [updateProfile.fulfilled]: (state, action) => {
-      state.isLoggedIn = false;
-      state.user = null;
+      state.firstName = action.payload.firstName;
+      state.lastName = action.payload.lastName;
     },
     [updateProfile.rejected]: (state, action) => {
       state.isLoggedIn = false;

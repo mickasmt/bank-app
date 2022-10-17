@@ -1,21 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessage } from "./messageSlice";
+import { getProfile } from "./userSlice";
 
 import AuthService from "redux/services/auth.service";
 
-const user = JSON.parse(localStorage.getItem("user"));
+const token = JSON.parse(localStorage.getItem("bankToken"));
 
-const initialState = user
-  ? { isLoggedIn: true, user }
-  : { isLoggedIn: false, user: null };
-
+const initialState = token
+  ? { isLoggedIn: true }
+  : { isLoggedIn: false };
 
 export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }, thunkAPI) => {
     try {
-      const data = await AuthService.login(email, password);
-      return { user: data };
+      await AuthService.login(email, password);
+
+      return thunkAPI.dispatch(getProfile());
     } catch (error) {
       const message =
         (error.response &&
@@ -32,7 +33,6 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk("auth/logout", async () => {
   await AuthService.logout();
 });
-
 
 export const authSlice = createSlice({
   name: "auth",

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import UserForm from "components/Forms/UserForm";
+import { useSelector } from "react-redux";
 
 /**
  * Header Profile component. Contains UserForm
@@ -7,6 +8,9 @@ import UserForm from "components/Forms/UserForm";
  */
 function HeaderProfile() {
   const [showUserForm, setShowUserForm] = useState(false);
+
+  const { firstName, lastName } = useSelector((state) => state.user);
+
 
   const toggleUserForm = () => {
     setShowUserForm(!showUserForm);
@@ -17,7 +21,7 @@ function HeaderProfile() {
       <h1>
         Welcome back
         <br />
-        Tony Jarvis!
+        {firstName} {lastName} !
       </h1>
       
       {showUserForm ? (

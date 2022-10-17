@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AccountCard from "components/Sections/AccountCard";
 import HeaderProfile from "components/Sections/HeaderProfile";
+
+import { getProfile } from "redux/features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const accountInfos = [
   {
@@ -28,6 +32,15 @@ const accountInfos = [
  * @returns {React.ReactElement}
  */
 function Profile() {
+  let navigate = useNavigate();
+
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!isLoggedIn) navigate("/login");
+  }, [isLoggedIn, navigate]);
+
+
   return (
     <main className="main bg-dark">
       <HeaderProfile />
@@ -35,9 +48,7 @@ function Profile() {
       <h2 className="sr-only">Accounts</h2>
 
       {accountInfos.map((info) => {
-        return (
-          <AccountCard data={info}  key={info.id} />
-        );
+        return <AccountCard data={info} key={info.id} />;
       })}
     </main>
   );
