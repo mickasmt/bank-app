@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 import "styles/components/forms/login-form.scss";
-import { clearMessage } from "redux/features/messageSlice";
 import { login } from "redux/features/authSlice";
+import { toast } from "react-toastify";
 
 /**
  * Login Form Component
@@ -16,26 +16,15 @@ function LoginForm() {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
-
   const { isLoggedIn } = useSelector((state) => state.auth);
 
-  // const message = useSelector((state) => console.log(state.message));
-  // console.log(message);
-
-  useEffect(() => {
-    dispatch(clearMessage());
-  }, [dispatch]);
-
   const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Entrer une adresse mail valide !")
-      .required("Une adresse mail est requise !"),
-    password: Yup.string().required("Un mot de passe est requis !"),
+    email: Yup.string().email("Email not valid !").required("Email required !"),
+    password: Yup.string().required("Password required !"),
   });
 
   const handleLogin = (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     const formData = {
@@ -44,25 +33,25 @@ function LoginForm() {
     };
 
     validationSchema
-      .validate(formData)
+      .validate(formData, { abortEarly: false })
       .then(() => {
-        // console.log(valid);
         dispatch(login(formData))
           .unwrap()
           .then(() => {
             navigate("/profile");
-            // window.location.reload();
+            toast.success("Login successful !");
           })
-          .catch(() => {
+          .catch((err) => {
             setLoading(false);
+            toast.error(err.split(":")[1]);
           });
       })
       .catch((err) => {
-        console.error(err);
-        // throw Error(err);
+        setLoading(false);
+        toast.error(err.errors.join('\n'));
       });
   };
-  
+
   if (isLoggedIn) {
     return <Navigate to="/profile" />;
   }
@@ -71,7 +60,6 @@ function LoginForm() {
     <section className="sign-in-content">
       <i className="fa fa-user-circle sign-in-icon"></i>
       <h1>Sign In</h1>
-      {/* {message && <div>{message}</div>} */}
 
       <form onSubmit={handleLogin}>
         <div className="input-wrapper">
@@ -90,9 +78,8 @@ function LoginForm() {
         </div>
 
         <button type="submit" className="sign-in-button">
-          {loading ? "Chargement..." : "Sign In"}
+          {loading ? "Loading..." : "Sign In"}
         </button>
-        {/* <Link to="/profile" className="sign-in-button">Sign In</Link> */}
       </form>
     </section>
   );

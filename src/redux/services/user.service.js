@@ -18,14 +18,17 @@ const getUser = () => {
     }).catch(err => console.log(err));
 };
 
-const updateUserProfile = ({ firstName, lastName }) => {
+const updateUserProfile = (firstName, lastName) => {
   return axios
     .put(baseUrl + "/user/profile", {
       firstName,
-      lastName,
+      lastName
     }, { headers: authHeader() })
     .then((response) => {
-      console.log(response);
+      localStorage.setItem("bankUser", JSON.stringify({
+        firstname: response.data.body.firstName,
+        lastname: response.data.body.lastName,
+      }));
       return response.data;
     });
 };

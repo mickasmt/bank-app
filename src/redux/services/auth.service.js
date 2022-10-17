@@ -18,7 +18,7 @@ const login = (email, password) => {
 };
 
 const logout = () => {
-  localStorage.removeItem("user");
+  localStorage.removeItem("bankUser");
   localStorage.removeItem("bankToken");
 };
 

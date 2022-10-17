@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { setMessage } from "./messageSlice";
 
 import UserService from "redux/services/user.service";
 
@@ -28,8 +27,7 @@ export const getProfile = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      thunkAPI.dispatch(setMessage(message));
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -38,8 +36,8 @@ export const updateProfile = createAsyncThunk(
   "user/updateUserProfile",
   async ({ firstname, lastname }, thunkAPI) => {
     try {
-      const data = await UserService.updateUserProfile();
-      return { user: data };
+      const response = await UserService.updateUserProfile(firstname, lastname);
+      return thunkAPI.fulfillWithValue(response.body);
     } catch (error) {
       const message =
         (error.response &&
@@ -47,8 +45,7 @@ export const updateProfile = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      thunkAPI.dispatch(setMessage(message));
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -70,13 +67,11 @@ export const userSlice = createSlice({
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
     },
-    [updateProfile.rejected]: (state, action) => {
-      state.isLoggedIn = false;
-      state.user = null;
+    'auth/logout/fulfilled': (state, action) => {
+      state.firstName = null;
+      state.lastName = null;
     },
   },
 });
-
-// export const { updateProfile } = userSlice.actions;
 
 export default userSlice.reducer;

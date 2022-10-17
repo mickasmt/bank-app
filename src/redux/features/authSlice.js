@@ -1,14 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { setMessage } from "./messageSlice";
 import { getProfile } from "./userSlice";
 
 import AuthService from "redux/services/auth.service";
 
 const token = JSON.parse(localStorage.getItem("bankToken"));
 
-const initialState = token
-  ? { isLoggedIn: true }
-  : { isLoggedIn: false };
+const initialState = token ? { isLoggedIn: true } : { isLoggedIn: false };
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -24,8 +21,7 @@ export const login = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      thunkAPI.dispatch(setMessage(message));
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -41,15 +37,12 @@ export const authSlice = createSlice({
   extraReducers: {
     [login.fulfilled]: (state, action) => {
       state.isLoggedIn = true;
-      state.user = action.payload.user;
     },
     [login.rejected]: (state, action) => {
       state.isLoggedIn = false;
-      state.user = null;
     },
     [logout.fulfilled]: (state, action) => {
       state.isLoggedIn = false;
-      state.user = null;
     },
   },
 });

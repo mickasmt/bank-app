@@ -21,8 +21,6 @@ body, #root {
   background-color: #12002b;
 }
 
-
-
 // profile
 
 .account {
@@ -99,4 +97,9 @@ body, #root {
   .transaction-button {
     width: 200px;
   }
+}
+
+
+.Toastify__toast-body {
+  white-space: pre-line;
 }

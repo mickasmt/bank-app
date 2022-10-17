@@ -4,9 +4,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import store from "./redux/store";
 import { Provider } from "react-redux";
+import { ToastContainer } from "react-toastify";
 
 // styles
 import "styles/main.scss";
+import "react-toastify/dist/ReactToastify.css";
 
 // pages
 import Home from "pages/Home";
@@ -23,6 +25,7 @@ root.render(
     <Provider store={store}>
       <Router>
         <Layout>
+          <ToastContainer position="top-center" autoClose={4000} />
           <Routes>
             <Route path="/" exact element={<Home />} />
             <Route path="/login" element={<Login />} />
