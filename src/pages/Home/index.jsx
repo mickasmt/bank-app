@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Hero from "components/Sections/Hero";
 import Features from "components/Sections/Features";
 
@@ -7,7 +7,10 @@ import Features from "components/Sections/Features";
  * @returns {React.ReactElement}
  */
 function Home() {
-  document.title = "Argent Bank - Home Page";
+  useEffect(() => {
+    document.title = "Home Page | ArgentBank";
+  }, []);
+
   return (
     <main>
       <Hero />

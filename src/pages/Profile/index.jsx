@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import AccountCard from "components/Sections/AccountCard";
 import HeaderProfile from "components/Sections/HeaderProfile";
-
-import { getProfile } from "redux/features/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 const accountInfos = [
   {
@@ -37,9 +36,10 @@ function Profile() {
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
+    document.title = "Profile Page | ArgentBank";
+
     if (!isLoggedIn) navigate("/login");
   }, [isLoggedIn, navigate]);
-
 
   return (
     <main className="main bg-dark">

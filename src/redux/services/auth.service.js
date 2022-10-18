@@ -2,6 +2,11 @@ import axios from "axios";
 
 const baseUrl = process.env.REACT_APP_BASE_API_URL || "http://localhost:3001/api/v1";
 
+/**
+ * POST request for login user with api
+ * @param  {string} email
+ * @param  {string} password
+ */
 const login = (email, password) => {
   return axios
     .post(baseUrl + "/user/login", {
@@ -17,6 +22,9 @@ const login = (email, password) => {
     });
 };
 
+/**
+ * Remove user in localstorage for logout
+ */
 const logout = () => {
   localStorage.removeItem("bankUser");
   localStorage.removeItem("bankToken");

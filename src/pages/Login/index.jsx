@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoginForm from "components/Forms/LoginForm";
 
 /**
@@ -6,6 +6,10 @@ import LoginForm from "components/Forms/LoginForm";
  * @returns {React.ReactElement}
  */
 function Login() {
+  useEffect(() => {
+    document.title = "Login Page | ArgentBank";
+  }, []);
+
   return (
     <main className="main bg-dark">
       <LoginForm />

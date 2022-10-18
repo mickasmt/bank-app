@@ -14,6 +14,7 @@ const initialState = user
       lastName: null,
     };
 
+// Get user data for profile
 export const getProfile = createAsyncThunk(
   "user/fetchUserProfile",
   async (_, thunkAPI) => {
@@ -32,6 +33,7 @@ export const getProfile = createAsyncThunk(
   }
 );
 
+// Update user data (firstname, lastname) on profile
 export const updateProfile = createAsyncThunk(
   "user/updateUserProfile",
   async ({ firstname, lastname }, thunkAPI) => {
