@@ -59,21 +59,22 @@ function UserForm({ toggleUserForm }) {
 
   return (
     <form className="user-form" onSubmit={handleUpdateUser}>
-      <div className="inputContainer">
-        <div className="input-wrapper">
-          <input type="text" id="firstname" defaultValue={firstName} />
-        </div>
-
-        <div className="input-wrapper">
-          <input type="text" id="lastname" defaultValue={lastName} />
-        </div>
+      <div className="box box-end">
+        <input type="text" id="firstname" defaultValue={firstName} />
       </div>
 
-      <div className="user-form-buttons">
-        <button className="user-form-button">
+      <div className="box box-start">
+        <input type="text" id="lastname" defaultValue={lastName} />
+      </div>
+
+      <div className="box box-end">
+        <button className="btn">
           {loading ? "Loading..." : "Save"}
         </button>
-        <button className="user-form-button" onClick={() => toggleUserForm()}>
+      </div>
+
+      <div className="box box-start">
+        <button className="btn" onClick={() => toggleUserForm()}>
           Cancel
         </button>
       </div>
